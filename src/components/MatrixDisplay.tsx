@@ -21,9 +21,9 @@ export const MatrixDisplay = ({ matrices, operations }: Props) => {
         return (
           <Span>
             <Matrix matrix={matrix} />
-            {operations[i] ? (
+            {operations[i] && operations[i] != "$" ? (
               <Input value={operations[i]} />
-            ) : i < matrix.length ? (
+            ) : i < matrix.length - 1 ? (
               <Input />
             ) : null}
           </Span>

@@ -8,22 +8,38 @@ import {
 import { MatrixDisplay } from "./MatrixDisplay";
 import styled from "styled-components";
 
-const performMultiplication = (matrices: number[][][]) => {
-  //perform multiplication first
-  return;
+const performMultiplication = (
+  matrices: number[][][],
+  operations: String[]
+) => {
+  const newMatrix = [...matrices];
+  for (let i = 0; i < newMatrix.length - 1; i++) {
+    let a = newMatrix[i];
+    let b = newMatrix[i + 1];
+    if (operations[i] === "*") {
+      newMatrix[i + 1] = matrixMultiplication(a, b);
+      newMatrix[i] = null;
+    }
+  }
+  return newMatrix;
 };
 
 const performOperations = (matrices: number[][][], operations: String[]) => {
-  let a = matrices[0];
-  for (let i = 1; i < matrices.length; i++) {
-    let b = matrices[i];
-    if (operations[i - 1] === "+") a = matrixAddition(a, b);
-    if (operations[i - 1] === "-") a = matrixSubtraction(a, b);
-    if (operations[i - 1] === "*") {
-      a = matrixMultiplication(a, b);
+  const newMatrix = performMultiplication(matrices, operations).filter(
+    matrix => matrix !== null
+  );
+  const newOperations = operations.filter(op => op != "*");
+  return newMatrix.reduce((acc, val, index) => {
+    if (newOperations[index - 1] === "+") {
+      return matrixAddition(acc, val);
     }
-  }
-  return a;
+    if (newOperations[index - 1] === "-") {
+      return matrixSubtraction(acc, val);
+    }
+    if (newOperations[index - 1] === "$") {
+      return acc;
+    }
+  });
 };
 
 const Container = styled.div`
@@ -35,12 +51,16 @@ const Container = styled.div`
 
 const App: React.FC = () => {
   const matrices = [
-    [[4, 5, 6], [7, 8, 9]],
-    [[4, 5, 6], [7, 8, 9]],
-    [[4, 5, 6], [7, 8, 9], [3, 5, 1]]
+    [[2, 4], [6, 8]],
+    [[4, 8], [12, 16]],
+    [[92, 8], [16, 4]],
+    [[99, 9], [9, 9]],
+    [[8, 7], [9, 8]],
+    [[56, 7], [91, 892]]
   ];
-  const [operations, addOperation] = useState(["+", "*"]);
 
+  const [matrixes, addMatrix] = useState(0);
+  const [operations, addOperation] = useState(["+", "-", "+", "-", "*", "$"]);
   console.log(performOperations(matrices, operations));
 
   return (

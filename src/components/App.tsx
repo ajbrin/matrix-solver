@@ -70,6 +70,8 @@ const App: React.FC = () => {
     "$"
   ]);
 
+  const [newMatrix, click] = useState(false);
+
   return (
     <Container>
       <Header />

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Matrix from "./Matrix";
 import MatrixCreate from "./MatrixCreate";
 import styled from "styled-components";
@@ -22,6 +22,9 @@ const Input = styled.input`
 `;
 
 export const MatrixDisplay = ({ matrices, operations }: Props) => {
+  const [matrixes, updateMatrixes] = useState([]);
+  const [operationz, updateOperations] = useState([]);
+
   return (
     <Container>
       {matrices.map((matrix, i) => {

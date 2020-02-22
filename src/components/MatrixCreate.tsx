@@ -1,5 +1,5 @@
 import Matrix from "./Matrix";
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { generateEmptyMatrix } from "../matrices";
 
@@ -15,13 +15,9 @@ const Grid = styled.div`
   }
 `;
 
-const filter = (matrix, i, j) => {
-  return matrix.filter((row, r) => r <= i).filter((col, c) => c <= j);
-};
-
 const MatrixCreate = () => {
-  const elements = generateEmptyMatrix(10, 10).map((row, i) =>
-    row.map((col, j) => j)
+  const [elements, updateElements] = useState(
+    generateEmptyMatrix(10, 10).map((row, i) => row.map((col, j) => [j, false]))
   );
 
   return (
@@ -29,10 +25,16 @@ const MatrixCreate = () => {
       {elements.map((row, i) =>
         row.map((col, j) => (
           <button
-            onMouseOver={() =>
-              elements
-                .filter((row, r) => r <= i)
-                .map(row => row.filter((col, c) => c < j))}
+            style={j[1] === true ? { backgroundColor: "#000" } : null}
+            onMouseOver={() => {
+              updateElements(
+                elements.filter((row, r) => r <= j).map(row =>
+                  row.map((col, c) => {
+                    return c < i ? [c, true] : [c, false];
+                  })
+                )
+              );
+            }}
           />
         ))
       )}

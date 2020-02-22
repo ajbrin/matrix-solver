@@ -7,6 +7,7 @@ import {
 } from "../matrices";
 import { MatrixDisplay } from "./MatrixDisplay";
 import styled from "styled-components";
+import Header from "./Header";
 
 const performMultiplication = (
   matrices: number[][][],
@@ -43,31 +44,46 @@ const performOperations = (matrices: number[][][], operations: String[]) => {
 };
 
 const Container = styled.div`
-  width: 400px;
-  height: 400px;
-  margin: 30px auto;
-  background-color: #add8e6;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #cec5c5;
 `;
 
 const App: React.FC = () => {
-  const matrices = [
-    [[2, 4], [6, 8]],
-    [[4, 8], [12, 16]],
-    [[92, 8], [16, 4]],
-    [[99, 9], [9, 9]],
-    [[8, 7], [9, 8]],
-    [[56, 7], [91, 892]]
-  ];
-
-  const [matrixes, addMatrix] = useState(0);
-  const [operations, addOperation] = useState(["+", "-", "+", "-", "*", "$"]);
-  console.log(performOperations(matrices, operations));
+  const [matrices, updateMatrices] = useState([
+    //[[2, 4], [6, 8]],
+    //[[4, 8], [12, 16]],
+    //[[92, 8], [16, 4]],
+    //[[99, 9], [9, 9]],
+    //[[8, 7], [9, 8]],
+    //[[56, 7], [91, 892]]
+  ]);
+  const [operations, updateOperations] = useState([
+    "+",
+    "-",
+    "+",
+    "-",
+    "*",
+    "$"
+  ]);
 
   return (
     <Container>
+      <Header />
       <MatrixDisplay matrices={matrices} operations={operations} />
     </Container>
   );
 };
 
 export default App;
+
+//<button
+// onClick={() => {
+// const resultMatrix = [performOperations(matrices, operations)];
+// updateMatrices(resultMatrix);
+// updateOperations(["$"]);
+//}}
+///>

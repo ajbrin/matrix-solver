@@ -9,7 +9,17 @@ interface Props {
 
 const Matrix = ({ matrix }: Props) => {
   return (
-    <Table>{matrix.map(row => <tr>{row.map(el => <td>{el}</td>)}</tr>)}</Table>
+    <Table>
+      {matrix.map(row => (
+        <tr>
+          {row.map(el => (
+            <td>
+              <input />
+            </td>
+          ))}
+        </tr>
+      ))}
+    </Table>
   );
 };
 
